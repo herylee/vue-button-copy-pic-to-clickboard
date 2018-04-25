@@ -1,21 +1,21 @@
 <template>
+
 <div>
-        <!-- 按钮生成图片 -->
-        <el-button  type="primary" icon="search" size="small" @click="test">生成凭证</el-button> 
+            <el-button  type="primary" icon="search" size="small" @click="test">生成凭证</el-button> 
 
-  <br>
+            <canvas  ref="canvas" width="600" :height="900" style="display:none;"></canvas>
+
+           <div class="canvasImg"  style=" float:left; display:inline">
+
+            <img src="" id="canvasImg"/>
+
+ </div>
+              <!-- 复制电子凭证按钮 -->
+
+           <el-button  type="primary" icon="search" size="small" @click="copycert">复制电子凭证</el-button> 
+
   
-<canvas  ref="canvas" width="600" :height="900" style="display:none;"></canvas>
-
- <div class="canvasImg"  style=" float:left; display:inline">
-
-<img src="" id="canvasImg"/>
-
-
-   <!-- 复制电子凭证按钮 -->
-  <el-button  type="primary" icon="search" size="small" @click="copycert">复制图片</el-button> 
-
-
+  
 
 <div class="qrcodeImg" style=" display:inline">
   <!-- 在线生成二维码网址 http://www.topscan.com/pingtai  -->
@@ -29,16 +29,17 @@
 
 
 
-</div>
+
+
+
+
 </template>
 
 
 
 
 <script>
-
-import axios from "axios"
-
+import axios from "axios";
 
 import $ from "jquery";
 // import { constants } from 'http2';
@@ -54,46 +55,40 @@ export default {
 
   data() {
     return {
-
       urlLink: "",
       certpath: "",
-      qrcodepath: "", 
+      qrcodepath: "",
 
-    
       showQrcode: false
-   
-    };    
-    },
+    };
+  },
   methods: {
-
     test() {
+      document.getElementById("qrcodeImg").src =
+        "http://qr.topscan.com/api.php?text=https://github.com/herylee";
 
+      this.canvas();
+    },
 
-		     this.canvas();
+    //向接口传入一个请求地址，标志号为号，然后获取二维码地址,传到网上获取二维码的图片地址
+    //       let Thirdcaseurl =
+    //         "url"+(this.fm.registno);
 
+    //     this.$axios //异步请求
+    //         .get(Thirdcaseurl)
+    //         .then(response => {
+    //           this.showQrcode = true;
+    //           this.qrcodepath = response.data.data.urlLink;
 
+    //            console.log(this.qrcodepath);
 
-   //向接口传入一个请求地址，标志号为号，然后获取二维码地址,传到网上获取二维码的图片地址
-      let Thirdcaseurl =
-        "url"+(this.fm.registno);
+    // //  'http://qr.topscan.com/api.php?text='+ (this.qrcodepath);
+    //         })
+    //         .catch(function(error) {});
+    // },
 
-    this.$axios //异步请求
-        .get(Thirdcaseurl)
-        .then(response => {
-          this.showQrcode = true;
-          this.qrcodepath = response.data.data.urlLink;
+    //  此复制函数来自于   https://github.com/owaisafaq/copier-js
 
-           console.log(this.qrcodepath);
- 
- document.getElementById("qrcodeImg").src = 'http://qr.topscan.com/api.php?text=https://github.com/herylee';
- 
-//  'http://qr.topscan.com/api.php?text='+ (this.qrcodepath);
-        })
-        .catch(function(error) {});
-},
-
- //  此复制函数来自于   https://github.com/owaisafaq/copier-js
- 
     SelectText(element) {
       var doc = document;
       if (doc.body.createTextRange) {
@@ -111,11 +106,9 @@ export default {
       }
     },
 
-
     //点击按钮复制电子凭证，需要后期把图片base64上传到服务器上,此处未实现
     //从服务器获取电子凭证的图片地址，然后赋值给canvasImg
     copycert() {
-
       $(".canvasImg").attr("contenteditable", true);
 
       // console.log($(".canvasImg")); // '.canvasImg' 是类名    选id就是#
@@ -126,17 +119,15 @@ export default {
       alert("电子凭证已复制!");
     },
 
-
-
     // 点击按钮复制二维码，需要二维码是图片的格式，此处未实现，从网上在线获取转换成二维码图片的的地址
 
     copyqrcode() {
-
       $(".qrcodeImg").attr("contenteditable", true);
-     // console.log($(".qrcodeImg"));
-       // '.canvasImg' 是类名    选id就是#
+      // console.log($(".qrcodeImg"));
+      // '.canvasImg' 是类名    选id就是#
       //获取DOM元素，需document.querySelector（".qrcodeImg"）获取这个dom节点，然后再获取qrcodeImg的值。
-    this.SelectText($(".qrcodeImg").get(0)); //取第一位   this调用了实例上的东西
+
+      this.SelectText($(".qrcodeImg").get(0)); //取第一位   this调用了实例上的东西
       document.execCommand("copy");
       window.getSelection().removeAllRanges();
       $(".qrcodeImg").removeAttr("contenteditable");
@@ -145,60 +136,41 @@ export default {
     },
 
     canvas() {
+      //向接口传入一个请求地址，标志号为报案号，然后获取电子凭证的图片的路径地址
+      //   let Secondcaseurl =  '';
+      // url
+      // url
 
+      //   this.$axios //异步请求
 
-  //向接口传入一个请求地址，标志号为报案号，然后获取电子凭证的图片的路径地址
-      let Secondcaseurl =  
-        // "Eallway/service/image/showImgBind?bindId=RDAA201644030000001410";
-        "Eallway/service/image/showImgBind?bindId="+(this.fm.registno);
-        
+      //     .get(Secondcaseurl)
 
+      //     .then(response => {
 
+      //        let pp1 = response.data.data[0].path;
+      //       // this.certpath = response.data ;
 
-      this.$axios //异步请求
+      //       console.log(pp1);
+      //       let pp2 =   "url"+pp1;
 
-        .get(Secondcaseurl)
+      //       this.certpath =  pp2;
 
-        .then(response => {
-   
+      //     })
+      //     .catch(function(error) {});
 
-           let pp1 = response.data.data[0].path;
-          // this.certpath = response.data ;
-
-          console.log(pp1);
-          let pp2 =   "url"+pp1;
- 
-    
-          this.certpath =  pp2;
-
-
-
-  document.getElementById("canvasImg").src =  
-  'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3431924074,2850839948&fm=27&gp=0.jpg';
-
-
-        })
-        .catch(function(error) {});
-
-
-  
-           
-          };
-        };
-      };
-    },
-
- 
-
-
-
-
-
+      document.getElementById("canvasImg").src =
+        "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3431924074,2850839948&fm=27&gp=0.jpg";
+    }
+  }
+};
 
 </script>
 
-
-
 <style scodpe>
-
+p.img {
+  cursor: pointer;
+  width: 100px;
+  height: 200px;
+  margin-right: 20px;
+}
 </style>
