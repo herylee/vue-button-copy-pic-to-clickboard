@@ -1,21 +1,6 @@
-# vue-button-copy-pic
+一开始想用vue项目重现这个功能，但是从原项目来出来有些困难，只好写得简单点
 
-> A Vue.js project
+灵感来自于  https://github.com/owaisafaq/copier-js   这个作者实现了html上的用jquery实现点击图片复制到剪贴板，
 
-## Build Setup
+我加了个按钮，点击按钮可以复制到剪贴板
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
